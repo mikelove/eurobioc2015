@@ -13,9 +13,12 @@ mode        : selfcontained
 knit        : slidify::knit2slides
 ---
 
-# title
+## Tackling batch effects and bias
+## in transcript expression
 
-test
+Michael Love <br>
+[@mikelove](http://twitter.com/mikelove) <br>
+http://mikelove.github.io/alpine_eurobioc2015
 
 ---
 
