@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="stylesheet" href="libraries/frameworks/revealjs/css/reveal.min.css">
-  <link rel="stylesheet" href="libraries/frameworks/revealjs/css/theme/solarized.css" id="theme">
+  <link rel="stylesheet" href="libraries/frameworks/revealjs/css/theme/night.css" id="theme">
   <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" id="theme">
   <!--[if lt IE 9]>
   <script src="lib/js/html5shiv.js"></script>
@@ -23,19 +23,30 @@
   <h2>in transcript expression</h2>
 
 <p>Michael Love <br>
-<a href="http://twitter.com/mikelove">@mikelove</a> <br>
-<a href="http://mikelove.github.io/alpine_eurobioc2015">http://mikelove.github.io/alpine_eurobioc2015</a></p>
+<a href="http://twitter.com/mikelove">@mikelove</a></p>
+
+<p>EuroBioc 2015 <br>
+this talk: <a href="http://mikelove.github.io/alpine_eurobioc2015">http://mikelove.github.io/alpine_eurobioc2015</a></p>
 
 </section>
 <section class='' data-state='' id='slide-2'>
-  <h2>title</h2>
-  <p>test</p>
+  
+  <ul>
+<li>Intro to RNA-seq technical biases</li>
+<li>Fragment sequence bias
+
+<ul>
+<li>GEUVADIS</li>
+<li><em>in-vitro</em> transcribed benchmark</li>
+</ul></li>
+<li>Our solution: <a href="http://biorxiv.org/content/early/2015/08/28/025767">alpine</a></li>
+<li>Implication for exon, transcript, gene analysis</li>
+</ul>
 
 </section>
 <section class='' data-state='' id='slide-3'>
-  <h3>title</h3>
-  <p>test</p>
-
+  
+  
 </section>
     </div>
   </div>
@@ -50,7 +61,7 @@
     progress: true,
     history: true,
     center: true,
-    theme: Reveal.getQueryHash().theme || 'solarized', 
+    theme: Reveal.getQueryHash().theme || 'night', 
     transition: Reveal.getQueryHash().transition || 'fade', 
     dependencies: [
     // Cross-browser shim that fully implements classList -
