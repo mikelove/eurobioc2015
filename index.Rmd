@@ -4,7 +4,7 @@ author      : Michael Love
 framework   : revealjs
 revealjs: # https://github.com/hakimel/reveal.js/
   transition  : fade
-  theme       : night
+  theme       : default
   center      : "true"
 highlighter : highlight.js
 hitheme     : tomorrow
