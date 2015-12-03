@@ -26,7 +26,7 @@
 <a href="http://twitter.com/mikelove">@mikelove</a></p>
 
 <p>2015-12-7: EuroBioc2015 <br>
-this talk: <a href="http://mikelove.github.io/alpine_eurobioc2015">http://mikelove.github.io/alpine_eurobioc2015</a></p>
+this talk: <a href="http://mikelove.github.io/eurobioc2015">http://mikelove.github.io/eurobioc2015</a></p>
 
 </section>
 <section class='' data-state='' id='slide-2'>
@@ -197,7 +197,7 @@ of differential expression across sequencing center</li>
 in the samples with coverage variability</li>
 <li>Simulations often do not include coverage variability, so not
 learning much about accuracy on real data</li>
-<li>See manuscript for more details: <a href="biorxiv.org/content/early/2015/08/28/025767">alpine ms</a></li>
+<li>See manuscript for more details, examples: <a href="biorxiv.org/content/early/2015/08/28/025767">alpine ms</a></li>
 </ul>
 
 </section>
@@ -206,7 +206,8 @@ learning much about accuracy on real data</li>
   <ul>
 <li>Exon-level analysis can be corrected using exon GC content as covariate</li>
 <li>Transcript- and exon-level DE analysis fixed by balanced design and blocking factors</li>
-<li>Gene-level analysis mostly avoids the big problem</li>
+<li>Gene-level analysis mostly avoids the big problem of misidentified
+isoforms and false positives</li>
 </ul>
 
 </section>
@@ -218,23 +219,64 @@ learning much about accuracy on real data</li>
 paper</li>
 </ul>
 
+<p>Graphic of really easy to fix length problem</p>
+
 </section>
 <section class='' data-state='' id='slide-19'>
   <h3>Gene-level count defenses</h3>
   <ul>
 <li>For human, most common number of isoforms = 1</li>
 <li>Among multi-isoform genes, most transcripts are similar length:
-median 15% difference in length</li>
+median ~15% difference in length</li>
 <li>So differential tx usage doesn&#39;t typically lead to large bias</li>
 <li>Transcript estimation is sometimes unidentifiable</li>
 </ul>
+
+<p><br></p>
 
 <p><img width=500 src="figures/unident.png"></p>
 
 </section>
 <section class='' data-state='' id='slide-20'>
-  
-  
+  <h3>Why still counts?</h3>
+  <ul>
+<li>Any statistician in the world would want: counts, offset/exposure</li>
+<li>I counted 10 penguins in 10 min, and 20 penguins in 20 min</li>
+<li>(Mostly important when sample size is small-ish)</li>
+</ul>
+
+<p><br></p>
+
+<p><img src="figures/penguins.png" alt="penguins"></p>
+
+</section>
+<section class='' data-state='' id='slide-21'>
+  <h3>New quantification methods</h3>
+  <ul>
+<li>Sailfish/Salmon and Kallisto are game changing
+methods. Quantification from FASTA in minutes</li>
+<li>For those who still want gene-level DE</li>
+<li class='..And'>to reduce problems of bias and unidentifiability:
+
+<ul>
+<li>Summarize counts (or estimated counts) to gene-level</li>
+<li>Calculate offset based on average transcript length</li>
+</ul></li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-22'>
+  <h3>Comparison to counts alone</h3>
+  <ul>
+<li>Importing counts and offset from these methods is easy</li>
+<li>Charlotte Soneson and Mark Robinson have extensively studied using
+these quant tools with Bioconductor software, manuscript in preparation</li>
+<li>Together, put together a package </li>
+<li>(note: ignoring bootstrap variance)</li>
+</ul>
+
+<p>Graphic of package</p>
+
 </section>
     </div>
   </div>

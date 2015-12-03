@@ -20,7 +20,7 @@ Michael Love <br>
 [@mikelove](http://twitter.com/mikelove)
 
 2015-12-7: EuroBioc2015 <br>
-this talk: http://mikelove.github.io/alpine_eurobioc2015
+this talk: http://mikelove.github.io/eurobioc2015
 
 ---
 
@@ -176,7 +176,7 @@ of differential expression across sequencing center
 in the samples with coverage variability
 * Simulations often do not include coverage variability, so not
   learning much about accuracy on real data
-* See manuscript for more details: [alpine ms](biorxiv.org/content/early/2015/08/28/025767)
+* See manuscript for more details, examples: [alpine ms](biorxiv.org/content/early/2015/08/28/025767)
 
 ---
 
@@ -184,7 +184,8 @@ in the samples with coverage variability
 
 * Exon-level analysis can be corrected using exon GC content as covariate
 * Transcript- and exon-level DE analysis fixed by balanced design and blocking factors
-* Gene-level analysis mostly avoids the big problem
+* Gene-level analysis mostly avoids the big problem of misidentified
+  isoforms and false positives
 
 ---
 
@@ -194,16 +195,54 @@ in the samples with coverage variability
 * Ignoring multimapping fragment can lead to false negatives: Watson
 paper
 
+Graphic of really easy to fix length problem
+
 ---
 
 ### Gene-level count defenses
 
 * For human, most common number of isoforms = 1
 * Among multi-isoform genes, most transcripts are similar length:
-  median 15% difference in length
+  median ~15% difference in length
 * So differential tx usage doesn't typically lead to large bias
 * Transcript estimation is sometimes unidentifiable
+
+<br>
 
 <img width=500 src="figures/unident.png">
 
 ---
+
+### Why still counts?
+
+* Any statistician in the world would want: counts, offset/exposure
+* I counted 10 penguins in 10 min, and 20 penguins in 20 min
+* (Mostly important when sample size is small-ish)
+
+<br>
+
+![penguins](figures/penguins.png)
+
+---
+
+### New quantification methods
+
+* Sailfish/Salmon and Kallisto are game changing
+methods. Quantification from FASTA in minutes
+* For those who still want gene-level DE
+* ...And to reduce problems of bias and unidentifiability:
+  * Summarize counts (or estimated counts) to gene-level
+  * Calculate offset based on average transcript length
+
+---
+
+### Comparison to counts alone
+
+* Importing counts and offset from these methods is easy
+* Charlotte Soneson and Mark Robinson have extensively studied using
+  these quant tools with Bioconductor software, manuscript in preparation
+* Together, put together a package 
+* (note: ignoring bootstrap variance)
+
+Graphic of package
+
