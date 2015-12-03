@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Transcript estimation EuroBioc2015</title>
+  <title>Michael Love - EuroBioc2015</title>
   <meta name="description" content="">
   <meta name="author" content="Michael Love">
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="stylesheet" href="libraries/frameworks/revealjs/css/reveal.min.css">
-  <link rel="stylesheet" href="libraries/frameworks/revealjs/css/theme/default.css" id="theme">
+  <link rel="stylesheet" href="libraries/frameworks/revealjs/css/theme/beige.css" id="theme">
   <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" id="theme">
   <!--[if lt IE 9]>
   <script src="lib/js/html5shiv.js"></script>
@@ -25,26 +25,214 @@
 <p>Michael Love <br>
 <a href="http://twitter.com/mikelove">@mikelove</a></p>
 
-<p>EuroBioc 2015 <br>
+<p>2015-12-7: EuroBioc2015 <br>
 this talk: <a href="http://mikelove.github.io/alpine_eurobioc2015">http://mikelove.github.io/alpine_eurobioc2015</a></p>
 
 </section>
 <section class='' data-state='' id='slide-2'>
-  
-  <ul>
-<li>Intro to RNA-seq technical biases</li>
-<li>Fragment sequence bias
-
-<ul>
-<li>GEUVADIS</li>
-<li><em>in-vitro</em> transcribed benchmark</li>
-</ul></li>
-<li>Our solution: <a href="http://biorxiv.org/content/early/2015/08/28/025767">alpine</a></li>
-<li>Implication for exon, transcript, gene analysis</li>
-</ul>
+  <h3>Two parts:</h3>
+  <ol>
+<li>RNA-seq sequence biases</li>
+<li>Implications for exon, transcript, and gene analysis</li>
+</ol>
 
 </section>
 <section class='' data-state='' id='slide-3'>
+  <h3>Some RNA-seq biases</h3>
+  <p><img src="figures/cartoon_biases.png" alt="bias"></p>
+
+</section>
+<section class='' data-state='' id='slide-4'>
+  <h3>Sequence bias correction</h3>
+  <p><img width=300 src="figures/roberts.png"></p>
+
+<p><a href="http://www.genomebiology.com/2011/12/3/R22/">Roberts, et al. Genome Biology, 2011</a></p>
+
+<ul>
+<li>A great paper on concepts of RNA-seq bias and correction</li>
+<li><strong>Random hexamer priming</strong> is most important.
+Used by Cufflinks, eXpress, BitSeq, kallisto.</li>
+<li>GC content of transcript doesn&#39;t capture the bias</li>
+<li>&quot;although normalization of expression values by GC content may be
+a simple way to remove some bias, it may well be a proxy for other
+effects rather than of inherent significance&quot;</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-5'>
+  <h3>Does this do the trick?</h3>
+  <ul>
+<li>15 vs 15 GEUVADIS samples across sequencing center</li>
+<li>Cufflinks with random hexamer bias correction</li>
+</ul>
+
+<p><img width=300 src="figures/volcano_cuff.png"></p>
+
+<ul>
+<li>At 1% FDR, 2,500 transcripts DE (10%)</li>
+<li>600 genes change major isoform (9%)</li>
+<li>NB: this is a lot of changes!</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-6'>
+  <h3>What&#39;s going on?</h3>
+  <ul>
+<li>For those genes with 2 isoforms, find the critical regions which are
+exclusive to one or other isoform</li>
+<li>Calculate GC content of those regions</li>
+</ul>
+
+<p><img width=300 src="figures/exclusive_exons.png"></p>
+
+</section>
+<section class='' data-state='' id='slide-7'>
+  <h3>Idea:</h3>
+  <ul>
+<li>Inspiration from
+<a href="http://www.ncbi.nlm.nih.gov/pubmed/22323520">Benjamini and Speed, 2012</a></li>
+<li>The correct resolution for GC content correction is at the
+<strong>fragment level</strong>, the unit which is amplified</li>
+<li>Include in the model the probability of observing a fragment,
+given its GC content</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-8'>
+  <h3>A dataset where we know the exact sequence</h3>
+  <ul>
+<li><a href="http://www.genomebiology.com/2014/15/6/R86">Lahens, et al. 2014: IVT-seq</a></li>
+<li>Predict coverage (test set) along the most troublesome transcripts using:
+
+<ul>
+<li>read start bias (Cufflinks VLMM)</li>
+<li>fragment GC content</li>
+<li>also modeling long stretches of G|C</li>
+</ul></li>
+</ul>
+
+<p><img width=300 src="figures/ivt_cov.png"></p>
+
+<p>color = coverage; black = test set prediction</p>
+
+</section>
+<section class='' data-state='' id='slide-9'>
+  <h3>Even more examples</h3>
+  <p><img width=500 src="figures/ivt_cov2.png"></p>
+
+</section>
+<section class='' data-state='' id='slide-10'>
+  <h3>Systematic comparison</h3>
+  <p><img width=300 src="figures/ivt_percent_var.png"></p>
+
+<ul>
+<li>Fragment GC content explains 2x more coverage variability</li>
+<li>Adding read start to the fragment GC model: no improvement</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-11'>
+  
+  <p>A transcript quant method, <a href="https://github.com/mikelove/alpine">alpine</a>,
+for comparing bias models:</p>
+
+<ul>
+<li>read start bias (Cufflinks VLMM)</li>
+<li>fragment length</li>
+<li>positional bias</li>
+<li><strong>fragment GC content</strong></li>
+</ul>
+
+<p><br></p>
+
+<p>Back to 15 vs 15 GEUVADIS samples across sequencing center</p>
+
+</section>
+<section class='' data-state='' id='slide-12'>
+  <h3>Four fold reduction in false positives</h3>
+  <p><img src="figures/geu_volcano_2iso.png"></p>
+
+<p>What are these false positives from?</p>
+
+</section>
+<section class='' data-state='' id='slide-13'>
+  <h3>Coverage drop-out based on fragment GC content</h3>
+  <p><img width=400 src="figures/geu_gc_curves.png"></p>
+
+<ul>
+<li>No existing quantification method corrects for this bias</li>
+<li>There are many genes with <em>critical regions</em> in this range</li>
+<li>Other experiments with problems with low GC</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-14'>
+  <h3>Misidentified isoforms from coverage variability</h3>
+  <p><img width=300 src="figures/chpf.png"> <img src="figures/chpf_cuff.png"> <img src="figures/chpf_alpine.png"></p>
+
+<ul>
+<li>Regardless of junction spanning evidence, naive quant methods are
+tricked by variable coverage</li>
+<li>What about k-mer / pseudo-alignment methods?</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-15'>
+  <h3>Pseudo-alignment: same misidentified isoforms</h3>
+  <p><img src="figures/geu_other.png"></p>
+
+<ul>
+<li>Missing k-mers cause same problem as missing fragments for a model
+which does not expect coverage drop-out</li>
+<li>For 5,700 transcripts: 136, 562, 577, 548, 614 false positives
+of differential expression across sequencing center</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-16'>
+  <h3>Summary part 1</h3>
+  <ul>
+<li>No existing quant tools correct for fragment GC content</li>
+<li>Not just a batch problem, we see ~10% wrongly identified transcripts
+in the samples with coverage variability</li>
+<li>Simulations often do not include coverage variability, so not
+learning much about accuracy on real data</li>
+<li>See manuscript for more details: <a href="biorxiv.org/content/early/2015/08/28/025767">alpine ms</a></li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-17'>
+  <h3>Implications</h3>
+  <ul>
+<li>Exon-level analysis can be corrected using exon GC content as covariate</li>
+<li>Transcript- and exon-level DE analysis fixed by balanced design and blocking factors</li>
+<li>Gene-level analysis mostly avoids the big problem</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-18'>
+  <h3>Gene-level count criticisms</h3>
+  <ul>
+<li>Counts are correlated with feature length: Cuffdiff2 paper</li>
+<li>Ignoring multimapping fragment can lead to false negatives: Watson
+paper</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-19'>
+  <h3>Gene-level count defenses</h3>
+  <ul>
+<li>For human, most common number of isoforms = 1</li>
+<li>Among multi-isoform genes, most transcripts are similar length:
+median 15% difference in length</li>
+<li>So differential tx usage doesn&#39;t typically lead to large bias</li>
+<li>Transcript estimation is sometimes unidentifiable</li>
+</ul>
+
+<p><img width=500 src="figures/unident.png"></p>
+
+</section>
+<section class='' data-state='' id='slide-20'>
   
   
 </section>
@@ -61,7 +249,7 @@ this talk: <a href="http://mikelove.github.io/alpine_eurobioc2015">http://mikelo
     progress: true,
     history: true,
     center: true,
-    theme: Reveal.getQueryHash().theme || 'default', 
+    theme: Reveal.getQueryHash().theme || 'beige', 
     transition: Reveal.getQueryHash().transition || 'fade', 
     dependencies: [
     // Cross-browser shim that fully implements classList -
