@@ -22,10 +22,10 @@
   <h2>Tackling batch effects and bias</h2>
   <h2>in transcript expression</h2>
 
-<p>Michael Love <br>
-<a href="http://twitter.com/mikelove">@mikelove</a></p>
-
-<p>2015-12-7: EuroBioc2015 <br>
+<p><a href="http://mikelove.github.io">Michael Love</a> <br>
+<a href="http://twitter.com/mikelove">@mikelove</a> <br>
+<a href="https://sites.google.com/site/eurobioc2015/">EuroBioc2015</a> <br>
+December 7, 2015 <br>
 this talk: <a href="http://mikelove.github.io/eurobioc2015">http://mikelove.github.io/eurobioc2015</a></p>
 
 </section>
@@ -33,7 +33,7 @@ this talk: <a href="http://mikelove.github.io/eurobioc2015">http://mikelove.gith
   <h3>Two parts:</h3>
   <ol>
 <li>RNA-seq sequence biases</li>
-<li>Implications for exon, transcript, and gene analysis</li>
+<li>Implications for exon, transcript, and gene differential analysis</li>
 </ol>
 
 </section>
@@ -52,7 +52,7 @@ this talk: <a href="http://mikelove.github.io/eurobioc2015">http://mikelove.gith
 <li>A great paper on concepts of RNA-seq bias and correction</li>
 <li><strong>Random hexamer priming</strong> is most important.
 Used by Cufflinks, eXpress, BitSeq, kallisto.</li>
-<li>GC content of transcript doesn&#39;t capture the bias</li>
+<li>GC content of <em>transcript</em> doesn&#39;t capture the bias</li>
 <li>&quot;although normalization of expression values by GC content may be
 a simple way to remove some bias, it may well be a proxy for other
 effects rather than of inherent significance&quot;</li>
@@ -78,8 +78,8 @@ effects rather than of inherent significance&quot;</li>
 <section class='' data-state='' id='slide-6'>
   <h3>What&#39;s going on?</h3>
   <ul>
-<li>For those genes with 2 isoforms, find the critical regions which are
-exclusive to one or other isoform</li>
+<li>Look at genes with 2 isoforms and reporting DE</li>
+<li>Find the critical regions exclusive to one or other isoform</li>
 <li>Calculate GC content of those regions</li>
 </ul>
 
@@ -91,9 +91,9 @@ exclusive to one or other isoform</li>
   <ul>
 <li>Inspiration from
 <a href="http://www.ncbi.nlm.nih.gov/pubmed/22323520">Benjamini and Speed, 2012</a></li>
-<li>The correct resolution for GC content correction is at the
-<strong>fragment level</strong>, the unit which is amplified</li>
-<li>Include in the model the probability of observing a fragment,
+<li>The correct resolution for GC content bias is at the
+<strong>fragment level</strong>, the unit which is PCR amplified</li>
+<li>Include in the RNA-seq model the probability of observing a fragment,
 given its GC content</li>
 </ul>
 
@@ -102,7 +102,7 @@ given its GC content</li>
   <h3>A dataset where we know the exact sequence</h3>
   <ul>
 <li><a href="http://www.genomebiology.com/2014/15/6/R86">Lahens, et al. 2014: IVT-seq</a></li>
-<li>Predict coverage (test set) along the most troublesome transcripts using:
+<li>Predict coverage along the troublesome transcripts using:
 
 <ul>
 <li>read start bias (Cufflinks VLMM)</li>
@@ -113,28 +113,27 @@ given its GC content</li>
 
 <p><img width=300 src="figures/ivt_cov.png"></p>
 
-<p>color = coverage; black = test set prediction</p>
+<ul>
+<li>color = coverage; black = test set prediction</li>
+<li>more examples in supplementary slides and ms</li>
+</ul>
 
 </section>
 <section class='' data-state='' id='slide-9'>
-  <h3>Even more examples</h3>
-  <p><img width=500 src="figures/ivt_cov2.png"></p>
-
-</section>
-<section class='' data-state='' id='slide-10'>
   <h3>Systematic comparison</h3>
   <p><img width=300 src="figures/ivt_percent_var.png"></p>
 
 <ul>
-<li>Fragment GC content explains 2x more coverage variability</li>
-<li>Adding read start to the fragment GC model: no improvement</li>
+<li>Fragment GC explains 2x more coverage variability</li>
+<li>Adding read start to the fragment GC: no improvement</li>
 </ul>
 
 </section>
-<section class='' data-state='' id='slide-11'>
+<section class='' data-state='' id='slide-10'>
   
-  <p>A transcript quant method, <a href="https://github.com/mikelove/alpine">alpine</a>,
-for comparing bias models:</p>
+  <p><img width=400 src="figures/alpine.jpeg"></p>
+
+<p><a href="https://github.com/mikelove/alpine">alpine</a>: a transcript quant method for comparing bias models</p>
 
 <ul>
 <li>read start bias (Cufflinks VLMM)</li>
@@ -148,15 +147,19 @@ for comparing bias models:</p>
 <p>Back to 15 vs 15 GEUVADIS samples across sequencing center</p>
 
 </section>
-<section class='' data-state='' id='slide-12'>
+<section class='' data-state='' id='slide-11'>
   <h3>Four fold reduction in false positives</h3>
-  <p><img src="figures/geu_volcano_2iso.png"></p>
+  <p><img width=500 src="figures/geu_volcano_2iso.png"></p>
 
-<p>What are these false positives from?</p>
+<ul>
+<li>562 ⇒ 136 at FDR 1%</li>
+<li>alpine controls sensitivity in simulation (supp. slides)</li>
+<li>What are these Cufflinks false positives from?</li>
+</ul>
 
 </section>
-<section class='' data-state='' id='slide-13'>
-  <h3>Coverage drop-out based on fragment GC content</h3>
+<section class='' data-state='' id='slide-12'>
+  <h3>Coverage drop-out from fragment GC</h3>
   <p><img width=400 src="figures/geu_gc_curves.png"></p>
 
 <ul>
@@ -166,7 +169,7 @@ for comparing bias models:</p>
 </ul>
 
 </section>
-<section class='' data-state='' id='slide-14'>
+<section class='' data-state='' id='slide-13'>
   <h3>Misidentified isoforms from coverage variability</h3>
   <p><img width=300 src="figures/chpf.png"> <img src="figures/chpf_cuff.png"> <img src="figures/chpf_alpine.png"></p>
 
@@ -177,52 +180,57 @@ tricked by variable coverage</li>
 </ul>
 
 </section>
-<section class='' data-state='' id='slide-15'>
+<section class='' data-state='' id='slide-14'>
   <h3>Pseudo-alignment: same misidentified isoforms</h3>
   <p><img src="figures/geu_other.png"></p>
 
 <ul>
 <li>Missing k-mers cause same problem as missing fragments for a model
 which does not expect coverage drop-out</li>
-<li>For 5,700 transcripts: 136, 562, 577, 548, 614 false positives
-of differential expression across sequencing center</li>
+<li>More examples in supp slides</li>
+<li>Out of 5,700 tx: 136, 562, 577, 548, 614 false positives of DE</li>
 </ul>
 
 </section>
-<section class='' data-state='' id='slide-16'>
+<section class='' data-state='' id='slide-15'>
   <h3>Summary part 1</h3>
   <ul>
 <li>No existing quant tools correct for fragment GC content</li>
 <li>Not just a batch problem, we see ~10% wrongly identified transcripts
 in the samples with coverage variability</li>
+<li><a href="http://www.genomebiology.com/2014/15/6/R86">Lahens (2014)</a>:
+bias may occur due to underlying biology</li>
 <li>Simulations often do not include coverage variability, so not
-learning much about accuracy on real data</li>
+learning much about accuracy for real data</li>
 <li>See manuscript for more details, examples: <a href="biorxiv.org/content/early/2015/08/28/025767">alpine ms</a></li>
 </ul>
 
 </section>
-<section class='' data-state='' id='slide-17'>
-  <h3>Implications</h3>
+<section class='' data-state='' id='slide-16'>
+  <h3>Implications for differential analysis</h3>
   <ul>
-<li>Exon-level analysis can be corrected using exon GC content as covariate</li>
-<li>Transcript- and exon-level DE analysis fixed by balanced design and blocking factors</li>
-<li>Gene-level analysis mostly avoids the big problem of misidentified
-isoforms and false positives</li>
+<li>Exon usage corrected using exon GC content as covariate</li>
+<li>Exon usage corrected by balanced design and blocking factor</li>
+<li>Transcript-level confounded: <strong>many FP</strong></li>
+<li>Transcript-level balanced could attribute DE to wrong isoform</li>
+<li>Gene-level DE safer, reduces problem of misidentified isoforms</li>
 </ul>
 
 </section>
-<section class='' data-state='' id='slide-18'>
+<section class='' data-state='' id='slide-17'>
   <h3>Gene-level count criticisms</h3>
   <ul>
 <li>Counts are correlated with feature length: Cuffdiff2 paper</li>
-<li>Ignoring multimapping fragment can lead to false negatives: Watson
+<li>Discarding multimapping fragment can lead to false negatives: Watson
 paper</li>
 </ul>
+
+<p><br></p>
 
 <p>Graphic of really easy to fix length problem</p>
 
 </section>
-<section class='' data-state='' id='slide-19'>
+<section class='' data-state='' id='slide-18'>
   <h3>Gene-level count defenses</h3>
   <ul>
 <li>For human, most common number of isoforms = 1</li>
@@ -237,11 +245,11 @@ median ~15% difference in length</li>
 <p><img width=500 src="figures/unident.png"></p>
 
 </section>
-<section class='' data-state='' id='slide-20'>
+<section class='' data-state='' id='slide-19'>
   <h3>Why still counts?</h3>
   <ul>
-<li>Any statistician in the world would want: counts, offset/exposure</li>
-<li>I counted 10 penguins in 10 min, and 20 penguins in 20 min</li>
+<li>Statisticians want: counts &amp; offset/exposure</li>
+<li>I counted 10 penguins in 10 min and 20 penguins in 20 min</li>
 <li>(Mostly important when sample size is small-ish)</li>
 </ul>
 
@@ -250,13 +258,13 @@ median ~15% difference in length</li>
 <p><img src="figures/penguins.png" alt="penguins"></p>
 
 </section>
-<section class='' data-state='' id='slide-21'>
+<section class='' data-state='' id='slide-20'>
   <h3>New quantification methods</h3>
   <ul>
-<li>Sailfish/Salmon and Kallisto are game changing
-methods. Quantification from FASTA in minutes</li>
-<li>For those who still want gene-level DE</li>
-<li class='..And'>to reduce problems of bias and unidentifiability:
+<li>Sailfish/Salmon and kallisto are <strong>game changing</strong> methods</li>
+<li>Quantification from FASTA in minutes</li>
+<li>For those who still want gene-level DE,</li>
+<li>… and to reduce problems of bias and unidentifiability:
 
 <ul>
 <li>Summarize counts (or estimated counts) to gene-level</li>
@@ -265,17 +273,63 @@ methods. Quantification from FASTA in minutes</li>
 </ul>
 
 </section>
-<section class='' data-state='' id='slide-22'>
-  <h3>Comparison to counts alone</h3>
+<section class='' data-state='' id='slide-21'>
+  <h3>Importing for count-based methods</h3>
   <ul>
 <li>Importing counts and offset from these methods is easy</li>
 <li>Charlotte Soneson and Mark Robinson have extensively studied using
-these quant tools with Bioconductor software, manuscript in preparation</li>
-<li>Together, put together a package </li>
-<li>(note: ignoring bootstrap variance)</li>
+these quant tools + Bioconductor tools, manuscript in preparation</li>
+<li>Together, put together a package</li>
+<li>(note: ignoring bootstrap variances)</li>
 </ul>
 
+<p><br></p>
+
 <p>Graphic of package</p>
+
+</section>
+<section class='' data-state='' id='slide-22'>
+  <h2>Supplementary slides</h2>
+  
+</section>
+<section class='' data-state='' id='slide-23'>
+  <h3>More examples of IVT-seq coverage</h3>
+  <p><img width=500 src="figures/ivt_cov2.png"></p>
+
+</section>
+<section class='' data-state='' id='slide-24'>
+  <h3>Isoform misidentification in GEUVADIS</h3>
+  <p><img width=550 src="figures/geu_fpkm_examples.png"></p>
+
+</section>
+<section class='' data-state='' id='slide-25'>
+  <h3>alpine sensitivity in simulation</h3>
+  <p><img width=450 src="figures/sim_roc.png"></p>
+
+<ul>
+<li>simulated confounding with GC bias from GEUVADIS</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-26'>
+  <h3>alpine accuracy in simulation</h3>
+  <p><img width=450 src="figures/sim_mad_error.png"></p>
+
+<ul>
+<li>median absolute error for abundance</li>
+<li>left: less GC bias; right: more GC bias</li>
+</ul>
+
+</section>
+<section class='' data-state='' id='slide-27'>
+  <h3>software details</h3>
+  <ul>
+<li>alpine 0.1.1 with GC content and fragment length</li>
+<li>Cufflinks 2.2.1 with bias correction</li>
+<li>RSEM 1.2.11</li>
+<li>kallisto 0.42.3 with bias correction</li>
+<li>Salmon 0.5.0 without bias correction (better performance)</li>
+</ul>
 
 </section>
     </div>
