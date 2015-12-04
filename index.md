@@ -41,7 +41,7 @@ this talk: http://mikelove.github.io/eurobioc2015
 
 <img width=300 src="figures/roberts.png">
 
-[Roberts, et al. Genome Biology, 2011](http://www.genomebiology.com/2011/12/3/R22/)
+[Roberts et al (2011)](http://www.genomebiology.com/2011/12/3/R22/)
 
 * A great paper on concepts of RNA-seq bias and correction
 * **Random hexamer priming** is most important.
@@ -89,7 +89,7 @@ effects rather than of inherent significance"
 
 ### A dataset where we know the exact sequence
 
-* [Lahens, et al. 2014: IVT-seq](http://www.genomebiology.com/2014/15/6/R86)
+* [Lahens et al (2014): IVT-seq](http://www.genomebiology.com/2014/15/6/R86)
 * Predict coverage along the troublesome transcripts using:
   * read start bias (Cufflinks VLMM)
   * fragment GC content
@@ -172,7 +172,7 @@ which does not expect coverage drop-out
 * No existing quant tools correct for fragment GC content
 * Not just a batch problem, we see ~10% wrongly identified transcripts
 in the samples with coverage variability
-* [Lahens (2014)](http://www.genomebiology.com/2014/15/6/R86):
+* [Lahens et al (2014)](http://www.genomebiology.com/2014/15/6/R86):
   bias may occur due to underlying biology
 * Simulations often do not include coverage variability, so not
   learning much about accuracy for real data
@@ -184,6 +184,7 @@ in the samples with coverage variability
 
 * Exon usage corrected using exon GC content as covariate
 * Exon usage corrected by balanced design and blocking factor
+* Transcript-level perfect coverage: OK
 * Transcript-level confounded: **many FP**
 * Transcript-level balanced could attribute DE to wrong isoform
 * Gene-level DE safer, reduces problem of misidentified isoforms
@@ -192,13 +193,14 @@ in the samples with coverage variability
 
 ### Gene-level count criticisms
 
-* Counts are correlated with feature length: Cuffdiff2 paper
-* Discarding multimapping fragment can lead to false negatives: Watson
-paper
+* Counts are correlated with feature length:
+  [Trapnell et al (2013)](http://www.nature.com/nbt/journal/v31/n1/abs/nbt.2450.html) 
+* Discarding multi-mapping fragments can lead to false negatives:
+  [Robert & Watson (2015)](http://www.genomebiology.com/2015/16/1/177) 
 
 <br>
 
-Graphic of really easy to fix length problem
+<img width=500 src="figures/genelength.png">
 
 ---
 
@@ -219,6 +221,7 @@ Graphic of really easy to fix length problem
 ### Why still counts?
 
 * Statisticians want: counts & offset/exposure
+* (Library size is an offset)
 * I counted 10 penguins in 10 min and 20 penguins in 20 min
 * (Mostly important when sample size is small-ish)
 
@@ -232,8 +235,8 @@ Graphic of really easy to fix length problem
 
 * Sailfish/Salmon and kallisto are **game changing** methods
 * Quantification from FASTA in minutes
-* For those who still want gene-level DE,
-* … and to reduce problems of bias and unidentifiability:
+* For those who still want gene-level DE <br>
+… and to reduce problems of bias and unidentifiability:
   * Summarize counts (or estimated counts) to gene-level
   * Calculate offset based on average transcript length
 
@@ -241,15 +244,16 @@ Graphic of really easy to fix length problem
 
 ### Importing for count-based methods
 
-* Importing counts and offset from these methods is easy
+* tximport: import counts and offset (+ other options)
+* (RSEM always provided average transcript length)
 * Charlotte Soneson and Mark Robinson have extensively studied using
   these quant tools + Bioconductor tools, manuscript in preparation
-* Together, put together a package
-* (note: ignoring bootstrap variances)
 
 <br>
 
 Graphic of package
+
+(ignoring bootstrap variances)
 
 ---
 

@@ -46,7 +46,7 @@ this talk: <a href="http://mikelove.github.io/eurobioc2015">http://mikelove.gith
   <h3>Sequence bias correction</h3>
   <p><img width=300 src="figures/roberts.png"></p>
 
-<p><a href="http://www.genomebiology.com/2011/12/3/R22/">Roberts, et al. Genome Biology, 2011</a></p>
+<p><a href="http://www.genomebiology.com/2011/12/3/R22/">Roberts et al (2011)</a></p>
 
 <ul>
 <li>A great paper on concepts of RNA-seq bias and correction</li>
@@ -101,7 +101,7 @@ given its GC content</li>
 <section class='' data-state='' id='slide-8'>
   <h3>A dataset where we know the exact sequence</h3>
   <ul>
-<li><a href="http://www.genomebiology.com/2014/15/6/R86">Lahens, et al. 2014: IVT-seq</a></li>
+<li><a href="http://www.genomebiology.com/2014/15/6/R86">Lahens et al (2014): IVT-seq</a></li>
 <li>Predict coverage along the troublesome transcripts using:
 
 <ul>
@@ -198,7 +198,7 @@ which does not expect coverage drop-out</li>
 <li>No existing quant tools correct for fragment GC content</li>
 <li>Not just a batch problem, we see ~10% wrongly identified transcripts
 in the samples with coverage variability</li>
-<li><a href="http://www.genomebiology.com/2014/15/6/R86">Lahens (2014)</a>:
+<li><a href="http://www.genomebiology.com/2014/15/6/R86">Lahens et al (2014)</a>:
 bias may occur due to underlying biology</li>
 <li>Simulations often do not include coverage variability, so not
 learning much about accuracy for real data</li>
@@ -211,6 +211,7 @@ learning much about accuracy for real data</li>
   <ul>
 <li>Exon usage corrected using exon GC content as covariate</li>
 <li>Exon usage corrected by balanced design and blocking factor</li>
+<li>Transcript-level perfect coverage: OK</li>
 <li>Transcript-level confounded: <strong>many FP</strong></li>
 <li>Transcript-level balanced could attribute DE to wrong isoform</li>
 <li>Gene-level DE safer, reduces problem of misidentified isoforms</li>
@@ -220,14 +221,15 @@ learning much about accuracy for real data</li>
 <section class='' data-state='' id='slide-17'>
   <h3>Gene-level count criticisms</h3>
   <ul>
-<li>Counts are correlated with feature length: Cuffdiff2 paper</li>
-<li>Discarding multimapping fragment can lead to false negatives: Watson
-paper</li>
+<li>Counts are correlated with feature length:
+<a href="http://www.nature.com/nbt/journal/v31/n1/abs/nbt.2450.html">Trapnell et al (2013)</a> </li>
+<li>Discarding multi-mapping fragments can lead to false negatives:
+<a href="http://www.genomebiology.com/2015/16/1/177">Robert &amp; Watson (2015)</a> </li>
 </ul>
 
 <p><br></p>
 
-<p>Graphic of really easy to fix length problem</p>
+<p><img width=500 src="figures/genelength.png"></p>
 
 </section>
 <section class='' data-state='' id='slide-18'>
@@ -249,6 +251,7 @@ median ~15% difference in length</li>
   <h3>Why still counts?</h3>
   <ul>
 <li>Statisticians want: counts &amp; offset/exposure</li>
+<li>(Library size is an offset)</li>
 <li>I counted 10 penguins in 10 min and 20 penguins in 20 min</li>
 <li>(Mostly important when sample size is small-ish)</li>
 </ul>
@@ -263,8 +266,8 @@ median ~15% difference in length</li>
   <ul>
 <li>Sailfish/Salmon and kallisto are <strong>game changing</strong> methods</li>
 <li>Quantification from FASTA in minutes</li>
-<li>For those who still want gene-level DE,</li>
-<li>… and to reduce problems of bias and unidentifiability:
+<li>For those who still want gene-level DE <br>
+… and to reduce problems of bias and unidentifiability:
 
 <ul>
 <li>Summarize counts (or estimated counts) to gene-level</li>
@@ -276,16 +279,17 @@ median ~15% difference in length</li>
 <section class='' data-state='' id='slide-21'>
   <h3>Importing for count-based methods</h3>
   <ul>
-<li>Importing counts and offset from these methods is easy</li>
+<li>tximport: import counts and offset (+ other options)</li>
+<li>(RSEM always provided average transcript length)</li>
 <li>Charlotte Soneson and Mark Robinson have extensively studied using
 these quant tools + Bioconductor tools, manuscript in preparation</li>
-<li>Together, put together a package</li>
-<li>(note: ignoring bootstrap variances)</li>
 </ul>
 
 <p><br></p>
 
 <p>Graphic of package</p>
+
+<p>(ignoring bootstrap variances)</p>
 
 </section>
 <section class='' data-state='' id='slide-22'>
