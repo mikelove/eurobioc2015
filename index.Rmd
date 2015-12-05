@@ -222,7 +222,7 @@ in the samples with coverage variability
 
 * Statisticians want: counts & offset/exposure
 * (Library size is an offset)
-* I counted 10 penguins in 10 min and 20 penguins in 20 min
+* I counted 10 penguins in 1 hr and 20 penguins in 2 hrs
 * (Mostly important when sample size is small-ish)
 
 <br>
