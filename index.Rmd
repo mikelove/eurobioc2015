@@ -244,10 +244,11 @@ in the samples with coverage variability
 
 ### Importing for count-based methods
 
-* tximport: import counts and offset (+ other options)
-* (RSEM always provided average transcript length)
 * Charlotte Soneson and Mark Robinson have extensively studied using
   these quant tools + Bioconductor tools, manuscript in preparation
+* together worked on a package, [tximport](https://github.com/mikelove/tximport):
+  import counts and offset (+ other options)
+* (RSEM always provided average transcript length)
 
 <br>
 
