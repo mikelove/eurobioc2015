@@ -92,8 +92,7 @@ effects rather than of inherent significance"
 * [Lahens et al (2014): IVT-seq](http://www.genomebiology.com/2014/15/6/R86)
 * Predict coverage along the troublesome transcripts using:
   * read start bias (Cufflinks VLMM)
-  * fragment GC content
-  * also modeling long stretches of G|C
+  * fragment GC content (+ long stretches G|C)
 
 <img width=300 src="figures/ivt_cov.png">
 
@@ -234,7 +233,8 @@ in the samples with coverage variability
 ### New quantification methods
 
 * Sailfish/Salmon and kallisto are **game changing** methods
-* Quantification from FASTA in minutes
+  * Quantification from FASTA in minutes
+  * Approaching accuracy of RSEM
 * For those who still want gene-level DE <br>
 … and to reduce problems of bias and unidentifiability:
   * Summarize counts (or estimated counts) to gene-level
