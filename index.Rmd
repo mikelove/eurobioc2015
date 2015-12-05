@@ -238,7 +238,7 @@ in the samples with coverage variability
 * For those who still want gene-level DE <br>
 … and to reduce problems of bias and unidentifiability:
   * Summarize counts (or estimated counts) to gene-level
-  * Calculate offset based on average transcript length
+  * Calculate offset based on *average transcript length*
 
 ---
 
@@ -246,15 +246,13 @@ in the samples with coverage variability
 
 * Charlotte Soneson and Mark Robinson have extensively studied using
   these quant tools + Bioconductor tools, manuscript in preparation
-* together worked on a package, [tximport](https://github.com/mikelove/tximport):
+* Together, worked on a package, [tximport](https://github.com/mikelove/tximport):
   import counts and offset (+ other options)
+
+<img width=450 src="figures/tximport.png">
+
 * (RSEM always provided average transcript length)
-
-<br>
-
-Graphic of package
-
-(ignoring bootstrap variances)
+* (not using bootstrap variances)
 
 ---
 
