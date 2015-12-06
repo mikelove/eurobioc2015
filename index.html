@@ -120,7 +120,7 @@ given its GC content</li>
 </section>
 <section class='' data-state='' id='slide-9'>
   <h3>Systematic comparison</h3>
-  <p><img width=300 src="figures/ivt_percent_var.png"></p>
+  <p><img width=400 src="figures/ivt_percent_var.png"></p>
 
 <ul>
 <li>Fragment GC explains 2x more coverage variability</li>
@@ -164,7 +164,7 @@ given its GC content</li>
 <ul>
 <li>No existing quantification method corrects for this bias</li>
 <li>There are many genes with <em>critical regions</em> in this range</li>
-<li>Other experiments with problems with low GC</li>
+<li>Other experiments have problems with low GC</li>
 </ul>
 
 </section>
@@ -194,7 +194,7 @@ which does not expect coverage drop-out</li>
 <section class='' data-state='' id='slide-15'>
   <h3>Summary part 1</h3>
   <ul>
-<li>No existing quant tools correct for fragment GC content</li>
+<li>No existing quant methods correct for fragment GC content</li>
 <li>Not just a batch problem, we see ~10% wrongly identified transcripts
 in the samples with coverage variability</li>
 <li><a href="http://www.genomebiology.com/2014/15/6/R86">Lahens et al (2014)</a>:
@@ -213,7 +213,7 @@ learning much about accuracy for real data</li>
 <li>Transcript-level perfect coverage: OK</li>
 <li>Transcript-level confounded: <strong>many FP</strong></li>
 <li>Transcript-level balanced could attribute DE to wrong isoform</li>
-<li>Gene-level DE safer, reduces problem of misidentified isoforms</li>
+<li>Gene-level reduces problem of misidentified isoforms</li>
 </ul>
 
 </section>
@@ -221,23 +221,28 @@ learning much about accuracy for real data</li>
   <h3>Gene-level count criticisms</h3>
   <ul>
 <li>Counts are correlated with feature length:
-<a href="http://www.nature.com/nbt/journal/v31/n1/abs/nbt.2450.html">Trapnell et al (2013)</a> </li>
-<li>Discarding multi-mapping fragments can lead to false negatives:
-<a href="http://www.genomebiology.com/2015/16/1/177">Robert &amp; Watson (2015)</a> </li>
+<a href="http://www.nature.com/nbt/journal/v31/n1/abs/nbt.2450.html">Trapnell et al (2013)</a></li>
 </ul>
 
-<p><br></p>
+<p><img width=450 src="figures/genelength.png"></p>
 
-<p><img width=500 src="figures/genelength.png"></p>
+<ul>
+<li>Discarding multi-mapping fragments can lead to false negatives:
+<a href="http://www.genomebiology.com/2015/16/1/177">Robert &amp; Watson (2015)</a> </li>
+<li>Gene-level &quot;masks&quot; differential tx usage</li>
+</ul>
 
 </section>
 <section class='' data-state='' id='slide-18'>
   <h3>Gene-level count defenses</h3>
   <ul>
-<li>For human, most common number of isoforms = 1</li>
-<li>Among multi-isoform genes, most transcripts are similar length:
-median ~15% difference in length</li>
-<li>So differential tx usage doesn&#39;t typically lead to large bias</li>
+<li>Differential tx usage doesn&#39;t necessarily lead to large bias
+
+<ul>
+<li>Among multi-isoform genes, most tx are similar length:
+median difference of ~15%</li>
+</ul></li>
+<li>Gene-level and sub-gene-level are complementary</li>
 <li>Transcript estimation is sometimes unidentifiable</li>
 </ul>
 
@@ -249,6 +254,7 @@ median ~15% difference in length</li>
 <section class='' data-state='' id='slide-19'>
   <h3>Why still counts?</h3>
   <ul>
+<li>While TPM good for descriptive measure</li>
 <li>Statisticians want: counts &amp; offset/exposure</li>
 <li>(Library size is an offset)</li>
 <li>I counted 10 penguins in 1 hr and 20 penguins in 2 hrs</li>
@@ -263,12 +269,8 @@ median ~15% difference in length</li>
 <section class='' data-state='' id='slide-20'>
   <h3>New quantification methods</h3>
   <ul>
-<li>Sailfish/Salmon and kallisto are <strong>game changing</strong> methods
-
-<ul>
+<li>Sailfish/Salmon and kallisto are <strong>game changing</strong> methods</li>
 <li>Quantification from FASTA in minutes</li>
-<li>Approaching accuracy of RSEM</li>
-</ul></li>
 <li>For those who still want gene-level DE <br>
 … and to reduce problems of bias and unidentifiability:
 
@@ -276,6 +278,7 @@ median ~15% difference in length</li>
 <li>Summarize counts (or estimated counts) to gene-level</li>
 <li>Calculate offset based on <em>average transcript length</em></li>
 </ul></li>
+<li>Then do complementary exon- or tx-level analysis </li>
 </ul>
 
 </section>
@@ -283,7 +286,7 @@ median ~15% difference in length</li>
   <h3>Importing for count-based methods</h3>
   <ul>
 <li>Charlotte Soneson and Mark Robinson have extensively studied using
-these quant tools + Bioconductor tools, manuscript in preparation</li>
+these quant methods + Bioconductor pkgs, manuscript in preparation</li>
 <li>Together, worked on a package, <a href="https://github.com/mikelove/tximport">tximport</a>:
 import counts and offset (+ other options)</li>
 </ul>
