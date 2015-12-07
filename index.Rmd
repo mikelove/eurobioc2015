@@ -261,7 +261,7 @@ in the samples with coverage variability
 ### Acknowledgments 
 
 * Rafael Irizarry
-* John Hogenesch and Nick Lahens at UPenn on IVT-seq dataset
+* John Hogenesch at UPenn on IVT-seq dataset
 * Bioc core team: `alpine` depends on e.g. `findCompatibleOverlaps`
 * Supported by NIH cancer training grant
 * Charlotte Soneson and Mark Robinson on `tximport` collaboration
