@@ -200,7 +200,6 @@ in the samples with coverage variability
 * Discarding multi-mapping fragments can lead to false negatives:
   [Robert & Watson (2015)](http://www.genomebiology.com/2015/16/1/177) 
 * Gene-level "masks" differential tx usage
-  
 
 ---
 
@@ -211,8 +210,6 @@ in the samples with coverage variability
   median difference of ~15%
 * Gene-level and sub-gene-level are complementary
 * Transcript estimation is sometimes unidentifiable
-
-<br>
 
 <img width=500 src="figures/unident.png">
 
